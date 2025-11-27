@@ -215,9 +215,15 @@ span{
     }
     
     h2 {
-        font-size: 1.1em; /* Увеличен размер текста */
+        font-size: 1em;
         margin: 5px 8px;
-        font-weight: bold;
+        font-weight: 600;
+        padding: 4px 10px;
+        min-width: 120px;
+    }
+    
+    h2 span {
+        font-size: 1em;
     }
     
     .EB, .FB {
