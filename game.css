@@ -12,19 +12,18 @@ html, body {
     position: fixed; /* Предотвращаем скролл на мобильных */
 }
 body{
-    background-color: #87CEEB; /* Голубое небо как запасной фон */
-    background-image: url('imgs/background.jpg');
+    background-image: url('imgs/background.jpg') !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
-    background-attachment: scroll;
+    background-attachment: scroll !important;
     -webkit-background-size: cover !important;
     -moz-background-size: cover !important;
     -o-background-size: cover !important;
     width: 100vw;
     height: 100vh;
     min-height: 100vh;
-    min-height: -webkit-fill-available; /* Для Safari на iOS */
+    min-height: -webkit-fill-available;
     touch-action: none;
     -webkit-user-select: none;
     user-select: none;
@@ -34,8 +33,7 @@ body{
 
 /* Дополнительный элемент для фона */
 html {
-    background-color: #87CEEB;
-    background-image: url('imgs/background.jpg');
+    background-image: url('imgs/background.jpg') !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
