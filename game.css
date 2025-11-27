@@ -62,16 +62,30 @@ body::before {
     z-index: -1;
 }
 h2{
-    margin: 10px 10px;
+    margin: 8px 12px;
     display: block;
-    font-size: 1.2em;
-    color: white; /* Белый цвет текста для видимости на темном фоне */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Тень для лучшей читаемости */
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #ffffff; /* Яркий белый цвет */
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.9),
+        0 0 10px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 0, 0, 0.3); /* Многослойная тень для лучшей видимости */
+    background: rgba(0, 0, 0, 0.3); /* Полупрозрачный черный фон */
+    padding: 6px 12px;
+    border-radius: 8px;
+    backdrop-filter: blur(5px); /* Размытие фона */
+    -webkit-backdrop-filter: blur(5px);
+    display: inline-block;
+    min-width: 150px;
 }
 span{
-    font-weight: 900;
-    color: white; /* Белый цвет для чисел */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Тень для лучшей читаемости */
+    font-weight: 700;
+    color: #FFD700; /* Золотой цвет для чисел - лучше видно */
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.9),
+        0 0 8px rgba(255, 215, 0, 0.5); /* Тень с золотым свечением */
+    font-size: 1.1em;
 }
 .EB, .FB{
     position: fixed; /* Используем fixed вместо absolute для Safari */
@@ -122,50 +136,75 @@ span{
 }
 
 .modal-content {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); /* Градиентный фон */
+    padding: 50px 40px;
+    border-radius: 25px;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(255, 255, 255, 0.3); /* Более выраженная тень и обводка */
-    border: 2px solid rgba(255, 255, 255, 0.5); /* Белая обводка для четкости */
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.6),
+        0 0 0 4px rgba(255, 255, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6); /* Многослойная тень и обводка */
+    border: 3px solid rgba(255, 255, 255, 0.8);
     max-width: 90%;
-    min-width: 280px;
+    min-width: 300px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .modal-content h1 {
-    color: #1a1a1a; /* Более темный цвет для лучшей читаемости */
-    margin-bottom: 20px;
-    font-size: 2.5em;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    color: #1a1a1a;
+    margin-bottom: 25px;
+    font-size: 2.8em;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.5px;
 }
 
 .modal-content h2 {
-    color: #2c2c2c; /* Более темный цвет для лучшей читаемости */
-    margin-bottom: 30px;
-    font-size: 1.5em;
-    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 35px;
+    font-size: 1.6em;
+    font-weight: 500;
+    line-height: 1.4;
 }
 
 .modal-content h2 span {
-    color: #4CAF50; /* Зеленый цвет для числа */
-    font-weight: bold;
-    font-size: 1.2em;
+    color: #4CAF50;
+    font-weight: 700;
+    font-size: 1.3em;
+    text-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
 }
 
 .modal-content button {
-    background-color: #4CAF50;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
     color: white;
     border: none;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    border-radius: 10px;
+    padding: 16px 35px;
+    font-size: 1.3em;
+    font-weight: 600;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 4px 15px rgba(76, 175, 80, 0.4),
+        0 2px 5px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .modal-content button:hover {
-    background-color: #45a049;
+    background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 20px rgba(76, 175, 80, 0.5),
+        0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content button:active {
+    transform: translateY(0);
+    box-shadow: 
+        0 2px 10px rgba(76, 175, 80, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 /* Адаптивность для мобильных устройств */
