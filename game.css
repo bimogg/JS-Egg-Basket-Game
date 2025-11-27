@@ -12,7 +12,7 @@ html, body {
     position: fixed; /* Предотвращаем скролл на мобильных */
 }
 body{
-    background-image: url('./imgs/background.jpg');
+    background-image: url('imgs/background.jpg');
     background-color: #87CEEB; /* Голубое небо как запасной фон */
     background-size: cover;
     background-position: center center;

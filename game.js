@@ -14,8 +14,8 @@ let score = 0;
 let bullets = 5;
 let HighScore = 0;
 let isHunted = false;
-let Gspeed = 1500;
-let Dspeed = 0.3;
+let Gspeed = 2500; // Интервал генерации объектов (больше = реже появляются)
+let Dspeed = 2.0; // Скорость падения (больше = быстрее падают)
 let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
 let gameTimer = 60; // 1 минута в секундах
@@ -101,7 +101,8 @@ function increseScore() {
     }
     if(score % 10 == 0){
         level = score/10;
-        changeSpeed(Gspeed-(level*3), Dspeed*level);
+        // Увеличиваем скорость падения, но уменьшаем частоту генерации
+        changeSpeed(Math.max(2000, Gspeed-(level*2)), Math.min(3.5, Dspeed + 0.2));
     }
     levelH2.innerText = level
     scoreH2.innerText = score
@@ -207,7 +208,7 @@ window.restartGame = function() {
     
     // Перезапускаем игру
     GenerateEgges(Gspeed);
-    eggAnimation(5);
+    eggAnimation(16); // Интервал обновления анимации (меньше = плавнее)
     startTimer();
 }
 
@@ -365,6 +366,6 @@ window.addEventListener('load',function (e) {
     });
 
     GenerateEgges(Gspeed);
-    eggAnimation(5);
+    eggAnimation(16); // Интервал обновления анимации (меньше = плавнее)
     startTimer(); // Запускаем таймер
 });
