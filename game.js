@@ -14,8 +14,8 @@ let score = 0;
 let bullets = 5;
 let HighScore = 0;
 let isHunted = false;
-let Gspeed = 2000; // Интервал генерации объектов (больше = реже появляются) - уменьшено для большего количества
-let Dspeed = 6.0; // Скорость падения (больше = быстрее падают) - значительно увеличено
+let Gspeed = 2500; // Интервал генерации объектов (больше = реже появляются) - баланс для ловли
+let Dspeed = 3.5; // Скорость падения (больше = быстрее падают) - умеренная скорость для возможности ловли
 let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
 let gameTimer = 60; // 1 минута в секундах
@@ -106,8 +106,8 @@ function increseScore() {
     }
     if(score % 10 == 0){
         level = score/10;
-        // Увеличиваем скорость падения, но уменьшаем частоту генерации (чтобы было больше объектов)
-        changeSpeed(Math.max(1500, Gspeed-(level*1)), Math.min(8.0, Dspeed + 0.4));
+        // Увеличиваем скорость падения постепенно, но не слишком быстро
+        changeSpeed(Math.max(2000, Gspeed-(level*1)), Math.min(5.0, Dspeed + 0.2));
     }
     levelH2.innerText = level
     scoreH2.innerText = score
@@ -160,16 +160,16 @@ function GenerateEgges(speed) {
     GspeedInterval = window.setInterval(function (e) {
         if(!gameActive) return; // Не генерируем объекты если игра не активна
         
-        // Проверяем количество объектов на экране - максимум 5-7 для большего веселья
+        // Проверяем количество объектов на экране - максимум 3-4 для возможности ловли
         eggs = document.getElementsByClassName('Gegg');
-        // Случайно выбираем максимум: 5, 6 или 7 объектов
-        const maxObjects = Math.floor(Math.random() * 3) + 5; // 5, 6 или 7
+        // Случайно выбираем максимум: 3 или 4 объекта
+        const maxObjects = Math.floor(Math.random() * 2) + 3; // 3 или 4
         if(eggs.length >= maxObjects) {
             return; // Не создаем новый объект, если уже достигнут максимум
         }
         
-        // Случайно создаем 1-3 объекта одновременно для разнообразия
-        const objectsToCreate = Math.floor(Math.random() * 3) + 1; // 1, 2 или 3
+        // Случайно создаем 1-2 объекта одновременно (не слишком много)
+        const objectsToCreate = Math.floor(Math.random() * 2) + 1; // 1 или 2
         
         for(let i = 0; i < objectsToCreate; i++) {
             // Проверяем еще раз перед созданием каждого объекта
