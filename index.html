@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Egg Game</title>
+    <link rel="icon" href="imgs/EB.png" type="image/png" />
+    <link rel="stylesheet" href="game.css" />
+    <script src="game.js"></script>
+  </head>
+  <body>
+    <h2>Level: <span class="level">1</span></h2>
+    <h2>Score: <span class="score">0</span></h2>
+    <h2>Highest Score: <span class="HighScore">0</span></h2>
+    <h2>Time: <span class="timer">60</span>s</h2>
+    <div id="gameOverModal" style="display: none;">
+      <div class="modal-content">
+        <h1>Время вышло!</h1>
+        <h2>Вы собрали: <span id="finalScore">0</span> пользователей</h2>
+        <button onclick="restartGame()">Играть снова</button>
+      </div>
+    </div>
+    <img src="imgs/EB.png" class="EB" onerror="this.style.display='none'; createBasket();" />
+    <img src="imgs/FB.png" class="FB" onerror="this.style.display='none';" />
+    <div id="basketFallback" style="display: none; position: absolute; bottom: 5px; width: 175px; height: 100px; background-color: #8B4513; border-radius: 10px; border: 3px solid #654321;"></div>
+    <script>
+    function createBasket() {
+        const basket = document.getElementById('basketFallback');
+        if(basket) basket.style.display = 'block';
+    }
+    </script>
+  </body>
+</html>
