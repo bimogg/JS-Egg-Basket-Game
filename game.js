@@ -131,7 +131,16 @@ function eggAnimation(speed) {
         lastTime = currentTime;
         
         // Нормализуем скорость под 60 FPS (16.67ms на кадр)
-        const normalizedSpeed = Dspeed * (deltaTime / 16.67);
+        // В первые 30 секунд игры уменьшаем скорость падения
+        let currentSpeed = Dspeed;
+        if(gameTimer !== undefined && gameTimer > 30) {
+            // После 30 секунд - нормальная скорость
+            currentSpeed = Dspeed;
+        } else {
+            // В первые 30 секунд - медленнее (в 2 раза)
+            currentSpeed = Dspeed * 0.5;
+        }
+        const normalizedSpeed = currentSpeed * (deltaTime / 16.67);
         
         eggs = document.getElementsByClassName('Gegg');
         for (const egg of eggs) {
