@@ -141,10 +141,18 @@ function eggAnimation(speed) {
     }, speed)
 }
 
-// Функция для получения случайного изображения человека
+// Переменная для отслеживания последнего использованного изображения
+let lastUsedImageIndex = -1;
+
+// Функция для получения случайного изображения человека (исключаем повторения)
 function getRandomPersonImage() {
-    // Случайно выбираем одно из изображений
-    const randomIndex = Math.floor(Math.random() * personImages.length);
+    let randomIndex;
+    // Повторяем выбор, пока не получим другое изображение
+    do {
+        randomIndex = Math.floor(Math.random() * personImages.length);
+    } while (randomIndex === lastUsedImageIndex && personImages.length > 1);
+    
+    lastUsedImageIndex = randomIndex;
     return personImages[randomIndex];
 }
 
@@ -152,10 +160,12 @@ function GenerateEgges(speed) {
     GspeedInterval = window.setInterval(function (e) {
         if(!gameActive) return; // Не генерируем объекты если игра не активна
         
-        // Проверяем количество объектов на экране - максимум 2-3
+        // Проверяем количество объектов на экране - максимум 3-4
         eggs = document.getElementsByClassName('Gegg');
-        if(eggs.length >= 3) {
-            return; // Не создаем новый объект, если уже есть 3 или больше
+        // Случайно выбираем максимум: 3 или 4 объекта
+        const maxObjects = Math.random() > 0.5 ? 3 : 4;
+        if(eggs.length >= maxObjects) {
+            return; // Не создаем новый объект, если уже достигнут максимум
         }
         
         let eggImg= document.createElement('img');
