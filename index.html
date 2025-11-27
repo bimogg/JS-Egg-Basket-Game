@@ -28,6 +28,25 @@
         const basket = document.getElementById('basketFallback');
         if(basket) basket.style.display = 'block';
     }
+    
+    // Принудительная загрузка фона через JavaScript
+    window.addEventListener('load', function() {
+        const body = document.body;
+        const html = document.documentElement;
+        const bgImage = 'imgs/background.jpg';
+        
+        // Проверяем, загрузилось ли изображение
+        const img = new Image();
+        img.onload = function() {
+            body.style.backgroundImage = 'url(' + bgImage + ')';
+            html.style.backgroundImage = 'url(' + bgImage + ')';
+            console.log('Фон загружен успешно');
+        };
+        img.onerror = function() {
+            console.error('Ошибка загрузки фона:', bgImage);
+        };
+        img.src = bgImage;
+    });
     </script>
   </body>
 </html>
