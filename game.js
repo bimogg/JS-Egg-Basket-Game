@@ -14,7 +14,7 @@ let score = 0;
 let bullets = 5;
 let HighScore = 0;
 let isHunted = false;
-let Gspeed = 1500; // Интервал генерации объектов (больше = реже появляются) - уменьшено для частого появления
+let Gspeed = 1000; // Интервал генерации объектов (больше = реже появляются) - уменьшено для очень частого появления
 let Dspeed = 4.5; // Скорость падения (больше = быстрее падают) - немного выше для динамичности
 let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
@@ -110,7 +110,7 @@ function increseScore() {
     if(score % 10 == 0){
         level = score/10;
         // Увеличиваем скорость падения постепенно, уменьшаем интервал генерации
-        changeSpeed(Math.max(1200, Gspeed-(level*1)), Math.min(6.5, Dspeed + 0.3));
+        changeSpeed(Math.max(800, Gspeed-(level*1)), Math.min(6.5, Dspeed + 0.3));
     }
     levelH2.innerText = level
     scoreH2.innerText = score
