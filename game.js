@@ -75,6 +75,7 @@ let y;
 let deg;
 let GspeedInterval ;
 let DspeedInterval ;
+let animationFrameId = null; // Для requestAnimationFrame
 
 function changeSpeed(GSpeed, DSpeed) {
     clearInterval(GspeedInterval);
@@ -114,8 +115,22 @@ function increseScore() {
 }
 
 function eggAnimation(speed) {
-    DspeedInterval = window.setInterval(function (e) {
-        if(!gameActive) return; // Останавливаем анимацию если игра не активна
+    // Используем requestAnimationFrame для стабильной работы в Safari
+    let lastTime = performance.now();
+    
+    function animate(currentTime) {
+        if(!gameActive) {
+            animationFrameId = null;
+            return; // Останавливаем анимацию если игра не активна
+        }
+        
+        // Вычисляем дельту времени для плавной анимации
+        const deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+        
+        // Нормализуем скорость под 60 FPS (16.67ms на кадр)
+        const normalizedSpeed = Dspeed * (deltaTime / 16.67);
+        
         eggs = document.getElementsByClassName('Gegg');
         for (const egg of eggs) {
             let eggPos = egg.getBoundingClientRect();
@@ -130,7 +145,7 @@ function eggAnimation(speed) {
                 } , 1000)
                 continue;
             }else{
-                egg.style.top =( eggPos.top + Dspeed) +"px";
+                egg.style.top =( eggPos.top + normalizedSpeed) +"px";
             } 
             if(FBPos && (FBPos.left <= eggPos.left && FBPos.left+FB.width >= eggPos.left+eggPos.width) && (FBPos.top <= eggPos.top )) {
                 increseScore();
@@ -138,7 +153,11 @@ function eggAnimation(speed) {
                 egg.remove();
             }
         }
-    }, speed)
+        
+        animationFrameId = requestAnimationFrame(animate);
+    }
+    
+    animationFrameId = requestAnimationFrame(animate);
 }
 
 // Переменная для отслеживания последнего использованного изображения
