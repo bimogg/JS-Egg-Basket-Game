@@ -152,6 +152,7 @@ span{
         width: 160px; /* Увеличен размер корзинки */
         max-width: 35vw; /* Адаптивный размер корзинки */
         min-width: 140px; /* Минимальный размер */
+        bottom: 30px !important; /* Больше отступ для мобильных Safari */
     }
     
     .Gegg {
@@ -193,6 +194,7 @@ span{
     .EB, .FB {
         width: 140px; /* Увеличен размер корзинки */
         min-width: 120px;
+        bottom: 25px !important; /* Отступ для маленьких экранов */
     }
     
     .Gegg {
