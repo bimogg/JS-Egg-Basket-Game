@@ -168,36 +168,46 @@ function GenerateEgges(speed) {
             return; // Не создаем новый объект, если уже достигнут максимум
         }
         
-        // Случайно создаем 1-2 объекта одновременно (не слишком много)
-        const objectsToCreate = Math.floor(Math.random() * 2) + 1; // 1 или 2
+        // Создаем только ОДИН объект за раз, чтобы не спамить одновременно
+        let eggImg= document.createElement('img');
+        // Случайно выбираем одно из изображений людей
+        const imageSrc = getRandomPersonImage();
+        eggImg.src = imageSrc;
+        eggImg.className = "Gegg"
         
-        for(let i = 0; i < objectsToCreate; i++) {
-            // Проверяем еще раз перед созданием каждого объекта
-            eggs = document.getElementsByClassName('Gegg');
-            if(eggs.length >= maxObjects) {
-                break; // Прекращаем создание, если достигнут максимум
+        // Проверяем позиции существующих объектов, чтобы не создавать слишком близко
+        let attempts = 0;
+        let newLeft;
+        let tooClose = false;
+        
+        do {
+            tooClose = false;
+            newLeft = getRandom(0, (screenWidth) - 80);
+            
+            // Проверяем расстояние до существующих объектов (минимум 100px)
+            for(let i = 0; i < eggs.length; i++) {
+                const existingLeft = parseInt(eggs[i].style.left) || 0;
+                if(Math.abs(newLeft - existingLeft) < 100) {
+                    tooClose = true;
+                    break;
+                }
             }
-            
-            let eggImg= document.createElement('img');
-            // Случайно выбираем одно из изображений людей
-            const imageSrc = getRandomPersonImage();
-            eggImg.src = imageSrc;
-            eggImg.className = "Gegg"
-            // Разные позиции для одновременных объектов
-            eggImg.style.left = getRandom(0,(screenWidth) - 80)+"px"
-            
-            // Уменьшаем размер для sticker1.webp
-            if(imageSrc.includes('sticker1.webp')) {
-                eggImg.style.width = '50px'; // Меньше обычного размера
-                eggImg.style.maxWidth = '50px';
-            }
-            
-            // Если изображение не загрузилось, просто удаляем его
-            eggImg.onerror = function() {
-                this.remove(); // Удаляем объект, если изображение не загрузилось
-            };
-            document.body.appendChild(eggImg)
+            attempts++;
+        } while(tooClose && attempts < 10); // Максимум 10 попыток
+        
+        eggImg.style.left = newLeft + "px";
+        
+        // Уменьшаем размер для sticker1.webp
+        if(imageSrc.includes('sticker1.webp')) {
+            eggImg.style.width = '50px'; // Меньше обычного размера
+            eggImg.style.maxWidth = '50px';
         }
+        
+        // Если изображение не загрузилось, просто удаляем его
+        eggImg.onerror = function() {
+            this.remove(); // Удаляем объект, если изображение не загрузилось
+        };
+        document.body.appendChild(eggImg)
     },speed)
 }
 
