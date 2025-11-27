@@ -15,7 +15,7 @@ let bullets = 5;
 let HighScore = 0;
 let isHunted = false;
 let Gspeed = 2500; // Интервал генерации объектов (больше = реже появляются) - баланс для ловли
-let Dspeed = 3.5; // Скорость падения (больше = быстрее падают) - умеренная скорость для возможности ловли
+let Dspeed = 4.5; // Скорость падения (больше = быстрее падают) - немного выше для динамичности
 let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
 let gameTimer = 60; // 1 минута в секундах
@@ -106,8 +106,8 @@ function increseScore() {
     }
     if(score % 10 == 0){
         level = score/10;
-        // Увеличиваем скорость падения постепенно, но не слишком быстро
-        changeSpeed(Math.max(2000, Gspeed-(level*1)), Math.min(5.0, Dspeed + 0.2));
+        // Увеличиваем скорость падения постепенно
+        changeSpeed(Math.max(2000, Gspeed-(level*1)), Math.min(6.5, Dspeed + 0.3));
     }
     levelH2.innerText = level
     scoreH2.innerText = score
@@ -168,46 +168,46 @@ function GenerateEgges(speed) {
             return; // Не создаем новый объект, если уже достигнут максимум
         }
         
-        // Создаем только ОДИН объект за раз, чтобы не спамить одновременно
-        let eggImg= document.createElement('img');
-        // Случайно выбираем одно из изображений людей
-        const imageSrc = getRandomPersonImage();
-        eggImg.src = imageSrc;
-        eggImg.className = "Gegg"
+        // Случайно создаем 1-2 объекта одновременно, но в одной области (близко друг к другу)
+        const objectsToCreate = Math.floor(Math.random() * 2) + 1; // 1 или 2
         
-        // Проверяем позиции существующих объектов, чтобы не создавать слишком близко
-        let attempts = 0;
-        let newLeft;
-        let tooClose = false;
+        // Выбираем общую область для всех объектов (если создаем несколько)
+        let baseLeft = getRandom(0, (screenWidth) - 80);
         
-        do {
-            tooClose = false;
-            newLeft = getRandom(0, (screenWidth) - 80);
-            
-            // Проверяем расстояние до существующих объектов (минимум 100px)
-            for(let i = 0; i < eggs.length; i++) {
-                const existingLeft = parseInt(eggs[i].style.left) || 0;
-                if(Math.abs(newLeft - existingLeft) < 100) {
-                    tooClose = true;
-                    break;
-                }
+        for(let i = 0; i < objectsToCreate; i++) {
+            // Проверяем еще раз перед созданием каждого объекта
+            eggs = document.getElementsByClassName('Gegg');
+            if(eggs.length >= maxObjects) {
+                break; // Прекращаем создание, если достигнут максимум
             }
-            attempts++;
-        } while(tooClose && attempts < 10); // Максимум 10 попыток
-        
-        eggImg.style.left = newLeft + "px";
-        
-        // Уменьшаем размер для sticker1.webp
-        if(imageSrc.includes('sticker1.webp')) {
-            eggImg.style.width = '50px'; // Меньше обычного размера
-            eggImg.style.maxWidth = '50px';
+            
+            let eggImg= document.createElement('img');
+            // Случайно выбираем одно из изображений людей
+            const imageSrc = getRandomPersonImage();
+            eggImg.src = imageSrc;
+            eggImg.className = "Gegg"
+            
+            // Если создаем несколько объектов, размещаем их близко друг к другу (в пределах 150px)
+            if(objectsToCreate > 1 && i > 0) {
+                // Смещаем немного от базовой позиции (в пределах 150px)
+                const offset = getRandom(-150, 150);
+                eggImg.style.left = Math.max(0, Math.min(screenWidth - 80, baseLeft + offset)) + "px";
+            } else {
+                eggImg.style.left = baseLeft + "px";
+            }
+            
+            // Уменьшаем размер для sticker1.webp
+            if(imageSrc.includes('sticker1.webp')) {
+                eggImg.style.width = '50px'; // Меньше обычного размера
+                eggImg.style.maxWidth = '50px';
+            }
+            
+            // Если изображение не загрузилось, просто удаляем его
+            eggImg.onerror = function() {
+                this.remove(); // Удаляем объект, если изображение не загрузилось
+            };
+            document.body.appendChild(eggImg)
         }
-        
-        // Если изображение не загрузилось, просто удаляем его
-        eggImg.onerror = function() {
-            this.remove(); // Удаляем объект, если изображение не загрузилось
-        };
-        document.body.appendChild(eggImg)
     },speed)
 }
 
