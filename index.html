@@ -29,7 +29,7 @@
         if(basket) basket.style.display = 'block';
     }
     
-    // Принудительная загрузка фона через JavaScript
+    // Принудительная загрузка фона через JavaScript для Safari
     window.addEventListener('load', function() {
         const body = document.body;
         const html = document.documentElement;
@@ -38,8 +38,28 @@
         // Проверяем, загрузилось ли изображение
         const img = new Image();
         img.onload = function() {
+            // Устанавливаем фон для всех элементов
             body.style.backgroundImage = 'url(' + bgImage + ')';
             html.style.backgroundImage = 'url(' + bgImage + ')';
+            body.style.backgroundSize = 'cover';
+            html.style.backgroundSize = 'cover';
+            body.style.backgroundPosition = 'center center';
+            html.style.backgroundPosition = 'center center';
+            body.style.backgroundRepeat = 'no-repeat';
+            html.style.backgroundRepeat = 'no-repeat';
+            
+            // Для Safari добавляем webkit префиксы
+            body.style.webkitBackgroundSize = 'cover';
+            html.style.webkitBackgroundSize = 'cover';
+            
+            // Создаем псевдоэлемент для Safari если нужно
+            if (!body.querySelector('.bg-overlay')) {
+                const overlay = document.createElement('div');
+                overlay.className = 'bg-overlay';
+                overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background-image:url(' + bgImage + ');background-size:cover;background-position:center;background-repeat:no-repeat;z-index:-1;pointer-events:none;';
+                body.appendChild(overlay);
+            }
+            
             console.log('Фон загружен успешно');
         };
         img.onerror = function() {
