@@ -14,7 +14,7 @@ let score = 0;
 let bullets = 5;
 let HighScore = 0;
 let isHunted = false;
-let Gspeed = 2500; // Интервал генерации объектов (больше = реже появляются) - баланс для ловли
+let Gspeed = 1500; // Интервал генерации объектов (больше = реже появляются) - уменьшено для частого появления
 let Dspeed = 4.5; // Скорость падения (больше = быстрее падают) - немного выше для динамичности
 let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
@@ -106,8 +106,8 @@ function increseScore() {
     }
     if(score % 10 == 0){
         level = score/10;
-        // Увеличиваем скорость падения постепенно
-        changeSpeed(Math.max(2000, Gspeed-(level*1)), Math.min(6.5, Dspeed + 0.3));
+        // Увеличиваем скорость падения постепенно, уменьшаем интервал генерации
+        changeSpeed(Math.max(1200, Gspeed-(level*1)), Math.min(6.5, Dspeed + 0.3));
     }
     levelH2.innerText = level
     scoreH2.innerText = score
@@ -160,16 +160,16 @@ function GenerateEgges(speed) {
     GspeedInterval = window.setInterval(function (e) {
         if(!gameActive) return; // Не генерируем объекты если игра не активна
         
-        // Проверяем количество объектов на экране - максимум 3-4 для возможности ловли
+        // Проверяем количество объектов на экране - максимум 5-6 для более динамичной игры
         eggs = document.getElementsByClassName('Gegg');
-        // Случайно выбираем максимум: 3 или 4 объекта
-        const maxObjects = Math.floor(Math.random() * 2) + 3; // 3 или 4
+        // Случайно выбираем максимум: 5 или 6 объектов (больше объектов одновременно)
+        const maxObjects = Math.floor(Math.random() * 2) + 5; // 5 или 6
         if(eggs.length >= maxObjects) {
             return; // Не создаем новый объект, если уже достигнут максимум
         }
         
-        // Случайно создаем 1-2 объекта одновременно, но в одной области (близко друг к другу)
-        const objectsToCreate = Math.floor(Math.random() * 2) + 1; // 1 или 2
+        // Случайно создаем 1-3 объекта одновременно, но в одной области (близко друг к другу)
+        const objectsToCreate = Math.floor(Math.random() * 3) + 1; // 1, 2 или 3
         
         // Выбираем общую область для всех объектов (если создаем несколько)
         let baseLeft = getRandom(0, (screenWidth) - 80);
