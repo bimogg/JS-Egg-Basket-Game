@@ -9,6 +9,8 @@
     <script src="game.js"></script>
   </head>
   <body>
+    <!-- Отдельный div для фона - работает в Safari -->
+    <div id="backgroundLayer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('imgs/background.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat; z-index: -1; pointer-events: none;"></div>
     <h2>Уровень: <span class="level">1</span></h2>
     <h2>Счет: <span class="score">0</span></h2>
     <h2>Лучший счет: <span class="HighScore">0</span></h2>
@@ -31,14 +33,24 @@
     
     // Принудительная загрузка фона через JavaScript для Safari
     window.addEventListener('load', function() {
+        const bgImage = 'imgs/background.jpg';
+        const bgLayer = document.getElementById('backgroundLayer');
         const body = document.body;
         const html = document.documentElement;
-        const bgImage = 'imgs/background.jpg';
         
         // Проверяем, загрузилось ли изображение
         const img = new Image();
         img.onload = function() {
-            // УБИРАЕМ background-color и устанавливаем только изображение
+            // Устанавливаем фон на отдельный div (работает в Safari)
+            if (bgLayer) {
+                bgLayer.style.backgroundImage = 'url(' + bgImage + ')';
+                bgLayer.style.backgroundSize = 'cover';
+                bgLayer.style.backgroundPosition = 'center center';
+                bgLayer.style.backgroundRepeat = 'no-repeat';
+                bgLayer.style.webkitBackgroundSize = 'cover';
+            }
+            
+            // Также устанавливаем на body и html для совместимости
             body.style.backgroundImage = 'url(' + bgImage + ')';
             html.style.backgroundImage = 'url(' + bgImage + ')';
             body.style.backgroundSize = 'cover';
@@ -47,26 +59,19 @@
             html.style.backgroundPosition = 'center center';
             body.style.backgroundRepeat = 'no-repeat';
             html.style.backgroundRepeat = 'no-repeat';
-            // ВАЖНО: убираем background-color!
             body.style.backgroundColor = 'transparent';
             html.style.backgroundColor = 'transparent';
-            
-            // Для Safari добавляем webkit префиксы
             body.style.webkitBackgroundSize = 'cover';
             html.style.webkitBackgroundSize = 'cover';
             
-            // Создаем псевдоэлемент для Safari если нужно
-            if (!body.querySelector('.bg-overlay')) {
-                const overlay = document.createElement('div');
-                overlay.className = 'bg-overlay';
-                overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background-image:url(' + bgImage + ');background-size:cover;background-position:center;background-repeat:no-repeat;z-index:-1;pointer-events:none;';
-                body.appendChild(overlay);
-            }
-            
-            console.log('Фон загружен успешно, background-color убран');
+            console.log('Фон загружен успешно в Safari');
         };
         img.onerror = function() {
             console.error('Ошибка загрузки фона:', bgImage);
+            // Показываем ошибку пользователю
+            if (bgLayer) {
+                bgLayer.style.backgroundColor = '#87CEEB';
+            }
         };
         img.src = bgImage;
     });
