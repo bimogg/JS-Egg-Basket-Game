@@ -132,13 +132,14 @@ function eggAnimation(speed) {
         
         // Нормализуем скорость под 60 FPS (16.67ms на кадр)
         // В первые 30 секунд игры уменьшаем скорость падения
+        // gameTimer начинается с 60 и уменьшается, так что gameTimer > 30 означает что прошло меньше 30 секунд
         let currentSpeed = Dspeed;
         if(gameTimer !== undefined && gameTimer > 30) {
+            // В первые 30 секунд (когда осталось больше 30 секунд) - медленнее (в 2 раза)
+            currentSpeed = Dspeed * 0.5;
+        } else {
             // После 30 секунд - нормальная скорость
             currentSpeed = Dspeed;
-        } else {
-            // В первые 30 секунд - медленнее (в 2 раза)
-            currentSpeed = Dspeed * 0.5;
         }
         const normalizedSpeed = currentSpeed * (deltaTime / 16.67);
         
