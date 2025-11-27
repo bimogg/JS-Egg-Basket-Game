@@ -14,8 +14,8 @@ let score = 0;
 let bullets = 5;
 let HighScore = 0;
 let isHunted = false;
-let Gspeed = 2500; // Интервал генерации объектов (больше = реже появляются)
-let Dspeed = 2.0; // Скорость падения (больше = быстрее падают)
+let Gspeed = 3500; // Интервал генерации объектов (больше = реже появляются) - увеличено для 2-3 объектов
+let Dspeed = 3.5; // Скорость падения (больше = быстрее падают) - увеличено для быстрого падения
 let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
 let gameTimer = 60; // 1 минута в секундах
@@ -106,8 +106,8 @@ function increseScore() {
     }
     if(score % 10 == 0){
         level = score/10;
-        // Увеличиваем скорость падения, но уменьшаем частоту генерации
-        changeSpeed(Math.max(2000, Gspeed-(level*2)), Math.min(3.5, Dspeed + 0.2));
+        // Увеличиваем скорость падения, но уменьшаем частоту генерации (чтобы было 2-3 объекта)
+        changeSpeed(Math.max(3000, Gspeed-(level*1)), Math.min(5.0, Dspeed + 0.3));
     }
     levelH2.innerText = level
     scoreH2.innerText = score
@@ -151,6 +151,13 @@ function getRandomPersonImage() {
 function GenerateEgges(speed) {
     GspeedInterval = window.setInterval(function (e) {
         if(!gameActive) return; // Не генерируем объекты если игра не активна
+        
+        // Проверяем количество объектов на экране - максимум 2-3
+        eggs = document.getElementsByClassName('Gegg');
+        if(eggs.length >= 3) {
+            return; // Не создаем новый объект, если уже есть 3 или больше
+        }
+        
         let eggImg= document.createElement('img');
         // Случайно выбираем одно из изображений людей
         eggImg.src = getRandomPersonImage();
