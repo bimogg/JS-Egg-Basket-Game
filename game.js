@@ -74,7 +74,6 @@ let x;
 let y;
 let deg;
 let GspeedInterval ;
-let DspeedInterval ;
 let animationFrameId = null; // Для requestAnimationFrame
 
 function changeSpeed(GSpeed, DSpeed) {
