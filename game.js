@@ -160,9 +160,17 @@ function GenerateEgges(speed) {
         
         let eggImg= document.createElement('img');
         // Случайно выбираем одно из изображений людей
-        eggImg.src = getRandomPersonImage();
+        const imageSrc = getRandomPersonImage();
+        eggImg.src = imageSrc;
         eggImg.className = "Gegg"
         eggImg.style.left = getRandom(0,(screenWidth) - 80)+"px"
+        
+        // Уменьшаем размер для sticker1.webp
+        if(imageSrc.includes('sticker1.webp')) {
+            eggImg.style.width = '50px'; // Меньше обычного размера
+            eggImg.style.maxWidth = '50px';
+        }
+        
         // Если изображение не загрузилось, просто удаляем его
         eggImg.onerror = function() {
             this.remove(); // Удаляем объект, если изображение не загрузилось
