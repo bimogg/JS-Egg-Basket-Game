@@ -21,10 +21,12 @@ body{
     width: 100vw;
     height: 100vh;
     min-height: 100vh;
+    min-height: -webkit-fill-available; /* Для Safari на iOS */
     touch-action: none; /* Предотвращаем стандартные жесты на мобильных */
     -webkit-user-select: none; /* Предотвращаем выделение текста */
     user-select: none;
     -webkit-touch-callout: none; /* Отключаем вызов меню при долгом нажатии на iOS */
+    padding-bottom: env(safe-area-inset-bottom); /* Учитываем безопасную зону на iOS */
 }
 h2{
     margin: 10px 10px;
@@ -39,12 +41,13 @@ span{
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Тень для лучшей читаемости */
 }
 .EB, .FB{
-    position: absolute;
+    position: fixed; /* Используем fixed вместо absolute для Safari */
     left: 0px;
-    bottom: 5px;
+    bottom: 20px; /* Увеличиваем отступ снизу для Safari */
     width: 175px;
     touch-action: none; /* Предотвращаем стандартные жесты */
     pointer-events: none; /* Позволяем касаниям проходить сквозь корзинку */
+    z-index: 100; /* Убеждаемся, что корзинка поверх других элементов */
 }
 .FB{
     visibility: hidden;
