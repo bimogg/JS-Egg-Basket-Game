@@ -79,7 +79,10 @@ let animationFrameId = null; // Для requestAnimationFrame
 
 function changeSpeed(GSpeed, DSpeed) {
     clearInterval(GspeedInterval);
-    clearInterval(DspeedInterval);
+    if(animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
     GenerateEgges(parseInt(GSpeed));
     eggAnimation(parseInt(DSpeed));
 }
@@ -245,7 +248,10 @@ function endGame() {
     gameActive = false;
     clearInterval(timerInterval);
     clearInterval(GspeedInterval);
-    clearInterval(DspeedInterval);
+    if(animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    }
     gameMusic.pause();
     
     // Показываем модальное окно с результатом
