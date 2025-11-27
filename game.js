@@ -27,11 +27,20 @@ let userInteracted = false; // Флаг для отслеживания взаи
 // Массив с именами файлов фотографий людей
 const personImages = [
     "imgs/sticker.webp",
+    "imgs/sticker1.webp",
     "imgs/sticker 2.webp",
     "imgs/sticker 3.webp",
     "imgs/sticker 4.webp",
     "imgs/sticker 5.webp",
-    "imgs/sticker 6.webp"
+    "imgs/sticker 6.webp",
+    "imgs/sticker 7.webp",
+    "imgs/sticker 8.webp",
+    "imgs/sticker 9.webp",
+    "imgs/sticker 10.webp",
+    "imgs/sticker 11.webp",
+    "imgs/sticker 12.webp",
+    "imgs/sticker 13.webp",
+    "imgs/sticker 14.webp"
 ];
 
 // Запасной вариант - если фотографии не найдены, объект просто не отобразится
