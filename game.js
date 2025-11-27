@@ -15,7 +15,7 @@ let bullets = 5;
 let HighScore = 0;
 let isHunted = false;
 let Gspeed = 2000; // Интервал генерации объектов (больше = реже появляются) - уменьшено для большего количества
-let Dspeed = 4.0; // Скорость падения (больше = быстрее падают) - увеличено для быстрого падения
+let Dspeed = 6.0; // Скорость падения (больше = быстрее падают) - значительно увеличено
 let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
 let gameTimer = 60; // 1 минута в секундах
@@ -107,7 +107,7 @@ function increseScore() {
     if(score % 10 == 0){
         level = score/10;
         // Увеличиваем скорость падения, но уменьшаем частоту генерации (чтобы было больше объектов)
-        changeSpeed(Math.max(1500, Gspeed-(level*1)), Math.min(6.0, Dspeed + 0.3));
+        changeSpeed(Math.max(1500, Gspeed-(level*1)), Math.min(8.0, Dspeed + 0.4));
     }
     levelH2.innerText = level
     scoreH2.innerText = score
@@ -168,24 +168,36 @@ function GenerateEgges(speed) {
             return; // Не создаем новый объект, если уже достигнут максимум
         }
         
-        let eggImg= document.createElement('img');
-        // Случайно выбираем одно из изображений людей
-        const imageSrc = getRandomPersonImage();
-        eggImg.src = imageSrc;
-        eggImg.className = "Gegg"
-        eggImg.style.left = getRandom(0,(screenWidth) - 80)+"px"
+        // Случайно создаем 1-3 объекта одновременно для разнообразия
+        const objectsToCreate = Math.floor(Math.random() * 3) + 1; // 1, 2 или 3
         
-        // Уменьшаем размер для sticker1.webp
-        if(imageSrc.includes('sticker1.webp')) {
-            eggImg.style.width = '50px'; // Меньше обычного размера
-            eggImg.style.maxWidth = '50px';
+        for(let i = 0; i < objectsToCreate; i++) {
+            // Проверяем еще раз перед созданием каждого объекта
+            eggs = document.getElementsByClassName('Gegg');
+            if(eggs.length >= maxObjects) {
+                break; // Прекращаем создание, если достигнут максимум
+            }
+            
+            let eggImg= document.createElement('img');
+            // Случайно выбираем одно из изображений людей
+            const imageSrc = getRandomPersonImage();
+            eggImg.src = imageSrc;
+            eggImg.className = "Gegg"
+            // Разные позиции для одновременных объектов
+            eggImg.style.left = getRandom(0,(screenWidth) - 80)+"px"
+            
+            // Уменьшаем размер для sticker1.webp
+            if(imageSrc.includes('sticker1.webp')) {
+                eggImg.style.width = '50px'; // Меньше обычного размера
+                eggImg.style.maxWidth = '50px';
+            }
+            
+            // Если изображение не загрузилось, просто удаляем его
+            eggImg.onerror = function() {
+                this.remove(); // Удаляем объект, если изображение не загрузилось
+            };
+            document.body.appendChild(eggImg)
         }
-        
-        // Если изображение не загрузилось, просто удаляем его
-        eggImg.onerror = function() {
-            this.remove(); // Удаляем объект, если изображение не загрузилось
-        };
-        document.body.appendChild(eggImg)
     },speed)
 }
 
