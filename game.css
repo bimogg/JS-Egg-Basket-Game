@@ -11,16 +11,17 @@ html, body {
     overflow: hidden;
     position: fixed; /* Предотвращаем скролл на мобильных */
 }
-/* Фон для всех браузеров */
+/* Фон для всех браузеров - БЕЗ background-color! */
 html, body {
-    background-image: url('imgs/background.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    background-image: url('imgs/background.jpg') !important;
+    background-color: transparent !important; /* Убираем голубой фон */
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
 }
 
 /* Специальные стили для Safari */

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="game.css" />
     <script src="game.js"></script>
   </head>
-  <body style="background-image: url('imgs/background.jpg') !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;">
+  <body>
     <h2>Level: <span class="level">1</span></h2>
     <h2>Score: <span class="score">0</span></h2>
     <h2>Highest Score: <span class="HighScore">0</span></h2>
@@ -38,7 +38,7 @@
         // Проверяем, загрузилось ли изображение
         const img = new Image();
         img.onload = function() {
-            // Устанавливаем фон для всех элементов
+            // УБИРАЕМ background-color и устанавливаем только изображение
             body.style.backgroundImage = 'url(' + bgImage + ')';
             html.style.backgroundImage = 'url(' + bgImage + ')';
             body.style.backgroundSize = 'cover';
@@ -47,6 +47,9 @@
             html.style.backgroundPosition = 'center center';
             body.style.backgroundRepeat = 'no-repeat';
             html.style.backgroundRepeat = 'no-repeat';
+            // ВАЖНО: убираем background-color!
+            body.style.backgroundColor = 'transparent';
+            html.style.backgroundColor = 'transparent';
             
             // Для Safari добавляем webkit префиксы
             body.style.webkitBackgroundSize = 'cover';
@@ -60,7 +63,7 @@
                 body.appendChild(overlay);
             }
             
-            console.log('Фон загружен успешно');
+            console.log('Фон загружен успешно, background-color убран');
         };
         img.onerror = function() {
             console.error('Ошибка загрузки фона:', bgImage);
