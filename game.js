@@ -14,8 +14,8 @@ let score = 0;
 let bullets = 5;
 let HighScore = 0;
 let isHunted = false;
-let Gspeed = 3500; // Интервал генерации объектов (больше = реже появляются) - увеличено для 2-3 объектов
-let Dspeed = 3.5; // Скорость падения (больше = быстрее падают) - увеличено для быстрого падения
+let Gspeed = 2000; // Интервал генерации объектов (больше = реже появляются) - уменьшено для большего количества
+let Dspeed = 4.0; // Скорость падения (больше = быстрее падают) - увеличено для быстрого падения
 let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
 let gameTimer = 60; // 1 минута в секундах
@@ -106,8 +106,8 @@ function increseScore() {
     }
     if(score % 10 == 0){
         level = score/10;
-        // Увеличиваем скорость падения, но уменьшаем частоту генерации (чтобы было 2-3 объекта)
-        changeSpeed(Math.max(3000, Gspeed-(level*1)), Math.min(5.0, Dspeed + 0.3));
+        // Увеличиваем скорость падения, но уменьшаем частоту генерации (чтобы было больше объектов)
+        changeSpeed(Math.max(1500, Gspeed-(level*1)), Math.min(6.0, Dspeed + 0.3));
     }
     levelH2.innerText = level
     scoreH2.innerText = score
@@ -160,10 +160,10 @@ function GenerateEgges(speed) {
     GspeedInterval = window.setInterval(function (e) {
         if(!gameActive) return; // Не генерируем объекты если игра не активна
         
-        // Проверяем количество объектов на экране - максимум 3-4
+        // Проверяем количество объектов на экране - максимум 5-7 для большего веселья
         eggs = document.getElementsByClassName('Gegg');
-        // Случайно выбираем максимум: 3 или 4 объекта
-        const maxObjects = Math.random() > 0.5 ? 3 : 4;
+        // Случайно выбираем максимум: 5, 6 или 7 объектов
+        const maxObjects = Math.floor(Math.random() * 3) + 5; // 5, 6 или 7
         if(eggs.length >= maxObjects) {
             return; // Не создаем новый объект, если уже достигнут максимум
         }
