@@ -12,12 +12,13 @@ html, body {
     position: fixed; /* Предотвращаем скролл на мобильных */
 }
 body{
-    background-image: url('imgs/background.jpg');
-    background-color: #87CEEB; /* Голубое небо как запасной фон */
+    background-color: #87CEEB; /* Голубое небо как запасной фон - сначала цвет */
+    background-image: url('./imgs/background.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: fixed; /* Фиксируем фон */
+    background-attachment: scroll; /* Изменено с fixed на scroll для Safari */
+    -webkit-background-size: cover; /* Для Safari */
     width: 100vw;
     height: 100vh;
     min-height: 100vh;
@@ -27,6 +28,18 @@ body{
     user-select: none;
     -webkit-touch-callout: none; /* Отключаем вызов меню при долгом нажатии на iOS */
     padding-bottom: env(safe-area-inset-bottom); /* Учитываем безопасную зону на iOS */
+}
+
+/* Дополнительный элемент для фона на случай проблем с body */
+html {
+    background-color: #87CEEB;
+    background-image: url('./imgs/background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
 }
 h2{
     margin: 10px 10px;
