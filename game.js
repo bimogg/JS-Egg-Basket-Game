@@ -230,9 +230,15 @@ function GenerateEgges(speed) {
                 eggImg.style.maxWidth = '50px';
             }
             
-            // Если изображение не загрузилось, просто удаляем его
+            // Если изображение не загрузилось, выводим ошибку и удаляем объект
             eggImg.onerror = function() {
+                console.error('Ошибка загрузки изображения:', imageSrc);
                 this.remove(); // Удаляем объект, если изображение не загрузилось
+            };
+            
+            // Проверяем успешную загрузку
+            eggImg.onload = function() {
+                console.log('Изображение успешно загружено:', imageSrc);
             };
             document.body.appendChild(eggImg)
         }
