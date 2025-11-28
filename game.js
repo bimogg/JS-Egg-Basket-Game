@@ -208,8 +208,12 @@ function GenerateEgges(speed) {
             let eggImg= document.createElement('img');
             // Случайно выбираем одно из изображений людей
             const imageSrc = getRandomPersonImage();
-            eggImg.src = imageSrc;
+            // Кодируем URL для правильной обработки пробелов в имени файла
+            eggImg.src = encodeURI(imageSrc);
             eggImg.className = "Gegg"
+            
+            // Логирование для отладки (можно убрать позже)
+            console.log('Создан объект с изображением:', imageSrc);
             
             // Если создаем несколько объектов, размещаем их близко друг к другу (в пределах 150px)
             if(objectsToCreate > 1 && i > 0) {
