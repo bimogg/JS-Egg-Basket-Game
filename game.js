@@ -28,6 +28,7 @@ let userInteracted = false; // Флаг для отслеживания взаи
 const personImages = [
     "imgs/sticker.webp",
     "imgs/sticker1.webp",
+    "imgs/sticker 2.webp",
     "imgs/sticker 6.webp",
     "imgs/sticker 7.webp",
     "imgs/sticker 8.webp",
