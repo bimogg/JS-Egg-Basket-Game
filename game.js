@@ -173,18 +173,10 @@ function eggAnimation(speed) {
     animationFrameId = requestAnimationFrame(animate);
 }
 
-// Переменная для отслеживания последнего использованного изображения
-let lastUsedImageIndex = -1;
-
-// Функция для получения случайного изображения человека (исключаем повторения)
+// Функция для получения случайного изображения человека
 function getRandomPersonImage() {
-    let randomIndex;
-    // Повторяем выбор, пока не получим другое изображение
-    do {
-        randomIndex = Math.floor(Math.random() * personImages.length);
-    } while (randomIndex === lastUsedImageIndex && personImages.length > 1);
-    
-    lastUsedImageIndex = randomIndex;
+    // Просто случайный выбор из всех доступных изображений
+    const randomIndex = Math.floor(Math.random() * personImages.length);
     return personImages[randomIndex];
 }
 
